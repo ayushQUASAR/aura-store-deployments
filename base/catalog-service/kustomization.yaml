@@ -8,5 +8,5 @@ resources:
   - service-canary.yaml
 
 images:
-  - name: ghcr.io/ayushQuasar/catalog-service
+  - name: ghcr.io/ayushquasar/catalog-service
     newTag: latest

@@ -18,7 +18,7 @@ spec:
       serviceAccountName: storefront
       containers:
         - name: storefront
-          image: ghcr.io/ayushQuasar/storefront:latest
+          image: ghcr.io/ayushquasar/storefront:latest
           ports:
             - containerPort: 3000
           env:

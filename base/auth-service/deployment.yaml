@@ -18,7 +18,7 @@ spec:
       serviceAccountName: auth-service
       containers:
         - name: auth-service
-          image: ghcr.io/ayushQuasar/auth-service:latest
+          image: ghcr.io/ayushquasar/auth-service:latest
           ports:
             - containerPort: 8081
           env:

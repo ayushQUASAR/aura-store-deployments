@@ -23,16 +23,16 @@ Kubernetes manifests managed by ArgoCD for the AuraStore microservice platform.
 
 ## Image Registry
 
-Application images: `ghcr.io/ayushQuasar/<service>:<tag>`
+Application images: `ghcr.io/ayushquasar/<service>:<tag>`
 
 | Service | Image | Port |
 |---------|-------|------|
-| api-gateway | ghcr.io/ayushQuasar/api-gateway | 8080 |
-| auth-service | ghcr.io/ayushQuasar/auth-service | 8081 |
-| catalog-service | ghcr.io/ayushQuasar/catalog-service | 8082 |
-| order-service | ghcr.io/ayushQuasar/order-service | 8083 |
-| history-service | ghcr.io/ayushQuasar/history-service | 8084 |
-| storefront | ghcr.io/ayushQuasar/storefront | 3000 |
+| api-gateway | ghcr.io/ayushquasar/api-gateway | 8080 |
+| auth-service | ghcr.io/ayushquasar/auth-service | 8081 |
+| catalog-service | ghcr.io/ayushquasar/catalog-service | 8082 |
+| order-service | ghcr.io/ayushquasar/order-service | 8083 |
+| history-service | ghcr.io/ayushquasar/history-service | 8084 |
+| storefront | ghcr.io/ayushquasar/storefront | 3000 |
 
 ## ArgoCD Applications
 

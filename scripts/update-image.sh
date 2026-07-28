@@ -18,6 +18,6 @@ fi
 echo "Updating ${SERVICE} image tag to ${TAG}..."
 
 cd "${BASE_DIR}"
-kustomize edit set image "ghcr.io/ayushQuasar/${SERVICE}=ghcr.io/ayushQuasar/${SERVICE}:${TAG}"
+kustomize edit set image "ghcr.io/ayushquasar/${SERVICE}=ghcr.io/ayushquasar/${SERVICE}:${TAG}"
 
-echo "Done. Updated ${SERVICE} -> ghcr.io/ayushQuasar/${SERVICE}:${TAG}"
+echo "Done. Updated ${SERVICE} -> ghcr.io/ayushquasar/${SERVICE}:${TAG}"

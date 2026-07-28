@@ -18,7 +18,7 @@ spec:
       serviceAccountName: order-service
       containers:
         - name: order-service
-          image: ghcr.io/ayushQuasar/order-service:latest
+          image: ghcr.io/ayushquasar/order-service:latest
           ports:
             - containerPort: 8083
           env:

@@ -18,7 +18,7 @@ spec:
       serviceAccountName: catalog-service
       containers:
         - name: catalog-service
-          image: ghcr.io/ayushQuasar/catalog-service:latest
+          image: ghcr.io/ayushquasar/catalog-service:latest
           ports:
             - containerPort: 8082
           env:
