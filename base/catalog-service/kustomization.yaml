@@ -2,11 +2,12 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-  - deployment.yaml
-  - deployment-canary.yaml
-  - service.yaml
-  - service-canary.yaml
+- deployment.yaml
+- deployment-canary.yaml
+- service.yaml
+- service-canary.yaml
 
 images:
-  - name: ghcr.io/ayushquasar/catalog-service
-    newTag: latest
+- name: ghcr.io/ayushquasar/catalog-service
+  newName: ghcr.io/ayushquasar/catalog-service
+  newTag: 87af4142b0218068b0f46b36ab6de724308af87c
