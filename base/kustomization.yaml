@@ -3,7 +3,6 @@ kind: Kustomization
 
 resources:
   - namespace.yaml
-  - infrastructure
   - api-gateway
   - auth-service
   - catalog-service
