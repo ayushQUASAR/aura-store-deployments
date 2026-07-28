@@ -1,0 +1,16 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - namespace.yaml
+  - infrastructure
+  - api-gateway
+  - auth-service
+  - catalog-service
+  - order-service
+  - history-service
+  - storefront
+
+commonLabels:
+  app.kubernetes.io/part-of: aurastore
+  managed-by: argocd

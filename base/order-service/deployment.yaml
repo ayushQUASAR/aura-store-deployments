@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-service
+  namespace: production-retail
+  labels:
+    app: order-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: order-service
+  template:
+    metadata:
+      labels:
+        app: order-service
+    spec:
+      serviceAccountName: order-service
+      containers:
+        - name: order-service
+          image: ghcr.io/ayushQuasar/order-service:latest
+          ports:
+            - containerPort: 8083
+          env:
+            - name: POSTGRES_HOST
+              value: "postgres-service"
+            - name: POSTGRES_DB
+              value: "retail_db"
+            - name: POSTGRES_USER
+              value: "retail_user"
+            - name: POSTGRES_PASSWORD
+              value: "retail_pass"
+            - name: KAFKA_SERVERS
+              value: "kafka-service:9092"
+            - name: JWT_SECRET
+              value: "AuraStoreSecretKey2026!SecureJWTToken_HMACSHA256"
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: "http://jaeger-collector.istio-system:4318"
+            - name: OTEL_SERVICE_NAME
+              value: "order-service"
+          resources:
+            requests:
+              cpu: 150m
+              memory: 384Mi
+            limits:
+              cpu: 400m
+              memory: 512Mi
+          startupProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8083
+            failureThreshold: 20
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8083
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8083
+            periodSeconds: 15

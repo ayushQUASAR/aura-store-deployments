@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: catalog-canary
+  namespace: production-retail
+  labels:
+    app: catalog-service
+    version: canary
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: catalog-service
+      version: canary
+  template:
+    metadata:
+      labels:
+        app: catalog-service
+        version: canary
+    spec:
+      serviceAccountName: catalog-service
+      containers:
+        - name: catalog-service
+          image: ghcr.io/ayushQuasar/catalog-service:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8082
+          env:
+            - name: POSTGRES_HOST
+              value: "postgres-service"
+            - name: POSTGRES_DB
+              value: "retail_db"
+            - name: POSTGRES_USER
+              value: "retail_user"
+            - name: POSTGRES_PASSWORD
+              value: "retail_pass"
+            - name: REDIS_HOST
+              value: "redis-service"
+            - name: KAFKA_SERVERS
+              value: "kafka-service:9092"
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: "http://jaeger-collector.istio-system:4318"
+            - name: OTEL_SERVICE_NAME
+              value: "catalog-canary"
+          resources:
+            requests:
+              cpu: 150m
+              memory: 384Mi
+            limits:
+              cpu: 400m
+              memory: 512Mi
+          startupProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8082
+            failureThreshold: 20
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8082
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8082
+            periodSeconds: 15

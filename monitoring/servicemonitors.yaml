@@ -1,0 +1,161 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: aurastore-auth-service
+  namespace: production-retail
+  labels:
+    release: rancher-monitoring
+    app: auth-service
+spec:
+  namespaceSelector:
+    matchNames:
+      - production-retail
+  selector:
+    matchLabels:
+      app: auth-service
+  endpoints:
+    - port: http
+      path: /actuator/prometheus
+      interval: 15s
+      scrapeTimeout: 10s
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: aurastore-catalog-service
+  namespace: production-retail
+  labels:
+    release: rancher-monitoring
+    app: catalog-service
+spec:
+  namespaceSelector:
+    matchNames:
+      - production-retail
+  selector:
+    matchLabels:
+      app: catalog-service
+  endpoints:
+    - port: http
+      path: /actuator/prometheus
+      interval: 15s
+      scrapeTimeout: 10s
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: aurastore-order-service
+  namespace: production-retail
+  labels:
+    release: rancher-monitoring
+    app: order-service
+spec:
+  namespaceSelector:
+    matchNames:
+      - production-retail
+  selector:
+    matchLabels:
+      app: order-service
+  endpoints:
+    - port: http
+      path: /actuator/prometheus
+      interval: 15s
+      scrapeTimeout: 10s
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: aurastore-history-service
+  namespace: production-retail
+  labels:
+    release: rancher-monitoring
+    app: history-service
+spec:
+  namespaceSelector:
+    matchNames:
+      - production-retail
+  selector:
+    matchLabels:
+      app: history-service
+  endpoints:
+    - port: http
+      path: /actuator/prometheus
+      interval: 15s
+      scrapeTimeout: 10s
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: aurastore-api-gateway
+  namespace: production-retail
+  labels:
+    release: rancher-monitoring
+    app: api-gateway
+spec:
+  namespaceSelector:
+    matchNames:
+      - production-retail
+  selector:
+    matchLabels:
+      app: api-gateway
+  endpoints:
+    - port: http
+      path: /actuator/prometheus
+      interval: 15s
+      scrapeTimeout: 10s
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: istio-waypoint
+  namespace: production-retail
+  labels:
+    release: rancher-monitoring
+spec:
+  selector:
+    matchExpressions:
+      - key: istio.io/waypoint-for
+        operator: Exists
+  namespaceSelector:
+    matchNames:
+      - production-retail
+  endpoints:
+    - port: http-envoy-prom
+      path: /stats/prometheus
+      interval: 30s
+      scrapeTimeout: 10s
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: istio-waypoint-metrics
+  namespace: production-retail
+  labels:
+    istio.io/waypoint-for: service
+spec:
+  selector:
+    app.kubernetes.io/name: waypoint
+  ports:
+    - name: http-envoy-prom
+      port: 15090
+      targetPort: 15090
+      protocol: TCP
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: istio-ztunnel
+  namespace: istio-system
+  labels:
+    release: rancher-monitoring
+spec:
+  selector:
+    matchLabels:
+      app: ztunnel
+  namespaceSelector:
+    matchNames:
+      - istio-system
+  endpoints:
+    - port: ztunnel-stats
+      path: /stats/prometheus
+      interval: 30s
+      scrapeTimeout: 10s

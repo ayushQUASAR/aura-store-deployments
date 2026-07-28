@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: production-retail
+  labels:
+    app.kubernetes.io/part-of: aurastore
+    istio.io/dataplane-mode: ambient
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: api-gateway
+  namespace: production-retail
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: auth-service
+  namespace: production-retail
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: catalog-service
+  namespace: production-retail
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: order-service
+  namespace: production-retail
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: history-service
+  namespace: production-retail
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: storefront
+  namespace: production-retail
