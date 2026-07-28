@@ -15,4 +15,3 @@ labels:
   - pairs:
       app.kubernetes.io/part-of: aurastore
       managed-by: argocd
-    includeSelectors: true
