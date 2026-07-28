@@ -2,9 +2,10 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-  - deployment.yaml
-  - service.yaml
+- deployment.yaml
+- service.yaml
 
 images:
-  - name: ghcr.io/ayushquasar/storefront
-    newTag: latest
+- name: ghcr.io/ayushquasar/storefront
+  newName: ghcr.io/ayushquasar/storefront
+  newTag: 87af4142b0218068b0f46b36ab6de724308af87c
