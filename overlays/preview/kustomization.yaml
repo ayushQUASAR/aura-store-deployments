@@ -1,0 +1,71 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: pr-preview-placeholder
+
+commonLabels:
+  app.kubernetes.io/part-of: aurastore
+  preview: "true"
+
+resources:
+  - ../../base/api-gateway
+  - ../../base/auth-service
+  - ../../base/catalog-service
+  - ../../base/order-service
+  - ../../base/history-service
+  - ../../base/storefront
+
+patches:
+  - patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: SERVICE_NAME_PLACEHOLDER
+      spec:
+        replicas: 1
+        template:
+          spec:
+            containers:
+              - name: SERVICE_NAME_PLACEHOLDER
+                resources:
+                  limits:
+                    cpu: "500m"
+                    memory: "512Mi"
+                  requests:
+                    cpu: "200m"
+                    memory: "256Mi"
+    target:
+      kind: Deployment
+      labelSelector: "app.kubernetes.io/part-of=aurastore"
+
+  - patch: |-
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: SERVICE_NAME_PLACEHOLDER
+      spec:
+        type: ClusterIP
+    target:
+      kind: Service
+      labelSelector: "app.kubernetes.io/part-of=aurastore"
+
+images:
+  - name: ghcr.io/ayushquasar/api-gateway
+    newTag: IMAGE_TAG_PLACEHOLDER
+  - name: ghcr.io/ayushquasar/auth-service
+    newTag: IMAGE_TAG_PLACEHOLDER
+  - name: ghcr.io/ayushquasar/catalog-service
+    newTag: IMAGE_TAG_PLACEHOLDER
+  - name: ghcr.io/ayushquasar/order-service
+    newTag: IMAGE_TAG_PLACEHOLDER
+  - name: ghcr.io/ayushquasar/history-service
+    newTag: IMAGE_TAG_PLACEHOLDER
+  - name: ghcr.io/ayushquasar/storefront
+    newTag: IMAGE_TAG_PLACEHOLDER
+
+configMapGenerator:
+  - name: preview-info
+    behavior: replace
+    literals:
+      - PR_NUMBER=PR_NUMBER_PLACEHOLDER
+      - PREVIEW_URL=https://pr-PR_NUMBER_PLACEHOLDER.ecommerce.cris-atoms.local

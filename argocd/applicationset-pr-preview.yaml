@@ -1,0 +1,87 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: aurastore-pr-previews
+  namespace: argocd
+spec:
+  generators:
+    - pullRequest:
+        github:
+          owner: ayushQUASAR
+          repo: aura-store
+          tokenRef:
+            secretName: github-token
+            key: token
+        filters:
+          - paths:
+              - "src/**"
+              - "microservices/**"
+              - "package.json"
+              - "*.yaml"
+              - "*.yml"
+        requeueAfterSeconds: 300
+  template:
+    metadata:
+      name: 'aurastore-pr-{{number}}'
+      labels:
+        app.kubernetes.io/part-of: aurastore
+        preview: "true"
+        pr-number: '{{number}}'
+    spec:
+      project: production
+      source:
+        repoURL: https://github.com/ayushQUASAR/aura-store-deployments
+        targetRevision: main
+        path: overlays/preview
+        helm:
+          values: |
+            global:
+              imageTag: '{{head_sha}}'
+              namespace: pr-{{number}}
+            ingress:
+              host: pr-{{number}}.ecommerce.cris-atoms.local
+            replicaCount: 1
+            resources:
+              limits:
+                cpu: "500m"
+                memory: "512Mi"
+              requests:
+                cpu: "200m"
+                memory: "256Mi"
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: pr-{{number}}
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+          allowEmpty: false
+        syncOptions:
+          - CreateNamespace=true
+          - PrunePropagationPolicy=foreground
+          - PruneLast=true
+        retry:
+          limit: 5
+          backoff:
+            duration: 5s
+            factor: 2
+            maxDuration: 3m
+      ignoreDifferences:
+        - group: ""
+          kind: Namespace
+          jsonPointers:
+            - /metadata/labels
+  prune:
+    generators:
+      - pullRequest:
+          github:
+            owner: ayushQUASAR
+            repo: aura-store
+          filters:
+            - status: closed
+              paths:
+                - "src/**"
+                - "microservices/**"
+                - "package.json"
+                - "*.yaml"
+                - "*.yml"
