@@ -8,4 +8,4 @@ resources:
 images:
 - name: ghcr.io/ayushquasar/auth-service
   newName: ghcr.io/ayushquasar/auth-service
-  newTag: 87af4142b0218068b0f46b36ab6de724308af87c
+  newTag: a6854008af51a0d10c8794fd422d0bb734a824e5
