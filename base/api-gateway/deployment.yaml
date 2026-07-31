@@ -29,16 +29,16 @@ spec:
               value: "api-gateway"
           resources:
             requests:
-              cpu: 100m
+              cpu: 250m
               memory: 256Mi
             limits:
-              cpu: 300m
+              cpu: 500m
               memory: 512Mi
           startupProbe:
             httpGet:
               path: /actuator/health
               port: 8080
-            failureThreshold: 20
+            failureThreshold: 40
             periodSeconds: 5
           readinessProbe:
             httpGet:
