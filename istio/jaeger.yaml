@@ -96,9 +96,11 @@ metadata:
   labels:
     app: jaeger
 spec:
+  type: NodePort
   ports:
     - name: http-query
       port: 16686
       targetPort: 16686
+      nodePort: 31806
   selector:
     app: jaeger
