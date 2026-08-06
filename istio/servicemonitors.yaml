@@ -35,6 +35,22 @@ spec:
       targetPort: 15090
       protocol: TCP
 ---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ztunnel
+  namespace: istio-system
+  labels:
+    app: ztunnel
+spec:
+  selector:
+    app: ztunnel
+  ports:
+    - name: ztunnel-stats
+      port: 15020
+      targetPort: 15020
+      protocol: TCP
+---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
