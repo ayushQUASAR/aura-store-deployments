@@ -5,9 +5,10 @@ metadata:
   namespace: production-retail
 spec:
   parentRefs:
-    - name: waypoint
-      namespace: production-retail
-      kind: Gateway
+    - group: ""
+      kind: Service
+      name: catalog-service
+      port: 8082
   hostnames:
     - "catalog-service.production-retail.svc.cluster.local"
   rules:
@@ -26,9 +27,10 @@ metadata:
   namespace: production-retail
 spec:
   parentRefs:
-    - name: waypoint
-      namespace: production-retail
-      kind: Gateway
+    - group: ""
+      kind: Service
+      name: api-gateway-service
+      port: 8080
   hostnames:
     - "api-gateway-service.production-retail.svc.cluster.local"
   rules:
@@ -43,9 +45,10 @@ metadata:
   namespace: production-retail
 spec:
   parentRefs:
-    - name: waypoint
-      namespace: production-retail
-      kind: Gateway
+    - group: ""
+      kind: Service
+      name: auth-service
+      port: 8081
   hostnames:
     - "auth-service.production-retail.svc.cluster.local"
   rules:
@@ -60,9 +63,10 @@ metadata:
   namespace: production-retail
 spec:
   parentRefs:
-    - name: waypoint
-      namespace: production-retail
-      kind: Gateway
+    - group: ""
+      kind: Service
+      name: order-service
+      port: 8083
   hostnames:
     - "order-service.production-retail.svc.cluster.local"
   rules:
@@ -77,9 +81,10 @@ metadata:
   namespace: production-retail
 spec:
   parentRefs:
-    - name: waypoint
-      namespace: production-retail
-      kind: Gateway
+    - group: ""
+      kind: Service
+      name: history-service
+      port: 8084
   hostnames:
     - "history-service.production-retail.svc.cluster.local"
   rules:
