@@ -1332,7 +1332,7 @@ data:
           },
           "targets": [
             {
-              "expr": "sum(orders_total{namespace=\"production-retail\"})",
+               "expr": "sum(orders_placed_total{namespace=\"production-retail\"})",
               "legendFormat": "",
               "refId": "A"
             }
@@ -1423,7 +1423,7 @@ data:
                 "type": "prometheus",
                 "uid": "prometheus"
               },
-              "expr": "sum(rate(orders_total{namespace=~\"$namespace\"}[1m]))",
+               "expr": "sum(rate(orders_placed_total{namespace=~\"$namespace\"}[1m]))",
               "legendFormat": "Orders/min",
               "refId": "A"
             }
@@ -1478,7 +1478,7 @@ data:
           },
           "targets": [
             {
-              "expr": "sum(order_status_updates_total{namespace=\"production-retail\"})",
+               "expr": "sum(orders_status_updates_total{namespace=\"production-retail\"})",
               "legendFormat": "",
               "refId": "A"
             }
@@ -1533,7 +1533,7 @@ data:
           },
           "targets": [
             {
-              "expr": "sum(login_attempts_total{namespace=\"production-retail\"})",
+               "expr": "sum(auth_login_attempts_total{namespace=\"production-retail\"})",
               "legendFormat": "",
               "refId": "A"
             }
@@ -1588,7 +1588,7 @@ data:
           },
           "targets": [
             {
-              "expr": "sum(user_registrations_total{namespace=\"production-retail\"})",
+               "expr": "sum(auth_registrations_total{namespace=\"production-retail\"})",
               "legendFormat": "",
               "refId": "A"
             }
@@ -1783,8 +1783,8 @@ data:
                 "type": "prometheus",
                 "uid": "prometheus"
               },
-              "expr": "histogram_quantile(0.99, sum(rate(kafka_producer_record_send_latency_seconds_bucket{namespace=~\"$namespace\"}[1m])) by (le))",
-              "legendFormat": "p99",
+               "expr": "kafka_producer_request_latency_avg{namespace=~\"$namespace\"}",
+               "legendFormat": "{{application}}",
               "refId": "A"
             }
           ],
@@ -1874,7 +1874,7 @@ data:
                 "type": "prometheus",
                 "uid": "prometheus"
               },
-              "expr": "kafka_consumer_record_lag_sum{namespace=~\"$namespace\"}",
+               "expr": "kafka_consumer_fetch_manager_records_lag{namespace=~\"$namespace\"}",
               "legendFormat": "{{application}}/{{topic}}",
               "refId": "A"
             }
@@ -1974,7 +1974,7 @@ data:
                 "type": "prometheus",
                 "uid": "prometheus"
               },
-              "expr": "rate(cache_evictions_total{namespace=~\"$namespace\"}[1m])",
+               "expr": "rate(catalog_cache_evictions_total{namespace=~\"$namespace\"}[1m])",
               "legendFormat": "evictions",
               "refId": "B"
             }
@@ -2187,7 +2187,7 @@ data:
                 "type": "prometheus",
                 "uid": "prometheus"
               },
-              "expr": "redis_operations_seconds{namespace=~\"$namespace\"}",
+               "expr": "lettuce_command_completion_seconds_sum{namespace=~\"$namespace\"} / lettuce_command_completion_seconds_count{namespace=~\"$namespace\"}",
               "legendFormat": "{{application}}",
               "refId": "A"
             }
@@ -2297,7 +2297,7 @@ data:
           },
           "targets": [
             {
-              "expr": "sum(cache_evictions_total{namespace=\"production-retail\"})",
+               "expr": "sum(catalog_cache_evictions_total{namespace=\"production-retail\"})",
               "legendFormat": "",
               "refId": "A"
             }
@@ -2683,7 +2683,7 @@ data:
                 "type": "prometheus",
                 "uid": "prometheus"
               },
-              "expr": "jvm_gc_pause_seconds{namespace=~\"$namespace\",application=~\"$service\"}",
+               "expr": "jvm_gc_pause_seconds_sum{namespace=~\"$namespace\",application=~\"$service\"}",
               "legendFormat": "{{application}}",
               "refId": "A"
             }

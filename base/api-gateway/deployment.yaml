@@ -27,6 +27,8 @@ spec:
               value: "http://jaeger-collector.istio-system:4318"
             - name: OTEL_SERVICE_NAME
               value: "api-gateway"
+            - name: MANAGEMENT_METRICS_DISTRIBUTION_PERCENTILES_HISTOGRAM_HTTP_SERVER_REQUESTS
+              value: "true"
           resources:
             requests:
               cpu: 250m
