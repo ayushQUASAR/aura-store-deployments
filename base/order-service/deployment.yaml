@@ -38,8 +38,10 @@ spec:
               value: "http://jaeger-collector.istio-system:4318"
             - name: OTEL_SERVICE_NAME
               value: "order-service"
-            - name: MANAGEMENT_METRICS_DISTRIBUTION_PERCENTILES_HISTOGRAM_HTTP_SERVER_REQUESTS
-              value: "true"
+          volumeMounts:
+            - name: metrics-config
+              mountPath: /app/config/application.yaml
+              subPath: application.yaml
           resources:
             requests:
               cpu: 250m
@@ -63,3 +65,7 @@ spec:
               path: /actuator/health
               port: 8083
             periodSeconds: 15
+      volumes:
+        - name: metrics-config
+          configMap:
+            name: metrics-config
